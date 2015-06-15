@@ -6,7 +6,7 @@ Learn about the Forte Payments REST API at https://www.forte.net/devdocs/api_res
 Add this line to your application's Gemfile:
 ````ruby
   # in your Gemfile
-  gem 'forte'
+  gem 'forte-payments'
 
   # then...
   bundle install
