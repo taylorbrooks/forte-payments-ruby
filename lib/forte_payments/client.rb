@@ -9,7 +9,7 @@ module FortePayments
 
     attr_reader :api_key, :secure_key, :account_id, :location_id
 
-    def initialize(api_key:, secure_key:, account_id:, location_id:)
+    def initialize(api_key: ENV['FORTE_API_KEY'], secure_key: ENV['FORTE_SECURE_KEY'], account_id: ENV['FORTE_ACCOUNT_ID'], location_id: ENV['FORTE_LOCATION_ID'])
       @api_key     = api_key
       @secure_key  = secure_key
       @account_id  = account_id
