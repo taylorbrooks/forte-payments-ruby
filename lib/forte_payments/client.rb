@@ -1,19 +1,15 @@
-require 'faraday'
-require 'faraday_middleware'
-
-Dir[File.expand_path('../resources/*.rb', __FILE__)].each{|f| require f}
 
 module FortePayments
   class Client
-    include FortePayments::Client::Addresses
-    include FortePayments::Client::Customers
-    include FortePayments::Client::Paymethods
-    include FortePayments::Client::Settlements
-    include FortePayments::Client::Transactions
+    include FortePayments::Client::Address
+    include FortePayments::Client::Customer
+    include FortePayments::Client::Paymethod
+    include FortePayments::Client::Settlement
+    include FortePayments::Client::Transaction
 
     attr_reader :api_key, :secure_key, :account_id, :location_id
 
-    def initialize(api_key: api_key, secure_key: secure_key, account_id: account_id, location_id: location_id)
+    def initialize(api_key:, secure_key:, account_id:, location_id:)
       @api_key     = api_key
       @secure_key  = secure_key
       @account_id  = account_id
@@ -21,7 +17,7 @@ module FortePayments
     end
 
     def get(path, options={})
-      connection.get(path, options).body
+      connection.get(base_url + path, options).body
     end
 
     def post(path, req_body)
@@ -50,7 +46,11 @@ module FortePayments
     end
 
     def connection
-      Faraday.new(url: base_url, headers: { accept: 'application/json' }) do |connection|
+      headers = {
+        :accept => 'application/json',
+        'X-Forte-Auth-Account-Id' => "act_#{account_id}"
+      }
+      Faraday.new(headers: headers) do |connection|
         connection.basic_auth api_key, secure_key
         connection.request    :json
         connection.response   :logger
