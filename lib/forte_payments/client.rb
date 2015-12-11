@@ -32,7 +32,7 @@ module FortePayments
     end
 
     def delete(path, options = {})
-      connection.delete(path, options).body
+      connection.delete(base_url + path, options).body
     end
 
     private

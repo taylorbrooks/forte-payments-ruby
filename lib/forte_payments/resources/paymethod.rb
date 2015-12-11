@@ -18,8 +18,8 @@ module FortePayments
         put("/customers/#{customer_id}/paymethods/#{paymethod_id}", options)
       end
 
-      def delete_paymethod(customer_id, paymethod_id)
-        delete("/customers/#{customer_id}/paymethods/#{paymethod_id}")
+      def delete_paymethod(paymethod_id)
+        delete("/paymethods/#{paymethod_id}")
       end
 
     end
