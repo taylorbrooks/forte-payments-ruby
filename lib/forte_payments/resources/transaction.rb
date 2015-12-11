@@ -2,12 +2,12 @@ module FortePayments
   class Client
     module Transaction
 
-      def create_transaction(customer_id, options = {})
-        post("/transactions/#{customer_id}/addresses", options)
+      def create_transaction(options = {})
+        post("/transactions", options)
       end
 
-      def list_transaction(customer_id, options = {})
-        get("/transactions/#{customer_id}/addresses", options)
+      def list_transaction(options = {})
+        get("/transactions", options)
       end
 
       def find_transaction(transaction_id, options = {})
