@@ -22,13 +22,13 @@ module FortePayments
 
     def post(path, req_body)
       connection.post do |req|
-        req.url(path)
+        req.url(base_url + path)
         req.body = req_body
       end.body
     end
 
     def put(path, options={})
-      connection.put(path, options).body
+      connection.put(base_url + path, options).body
     end
 
     def delete(path, options = {})
