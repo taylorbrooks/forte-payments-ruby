@@ -1,5 +1,8 @@
 
 module FortePayments
+  class Error < StandardError
+  end
+
   class Client
     include FortePayments::Client::Address
     include FortePayments::Client::Customer
@@ -17,25 +20,44 @@ module FortePayments
     end
 
     def get(path, options={})
-      connection.get(base_url + path, options).body
+      make_request {
+        connection.get(base_url + path, options)
+      }
     end
 
     def post(path, req_body)
-      connection.post do |req|
-        req.url(base_url + path)
-        req.body = req_body
-      end.body
+      make_request {
+        connection.post do |req|
+          req.url(base_url + path)
+          req.body = req_body
+        end
+      }
     end
 
     def put(path, options={})
-      connection.put(base_url + path, options).body
+      make_request {
+        connection.put(base_url + path, options)
+      }
     end
 
     def delete(path, options = {})
-      connection.delete(base_url + path, options).body
+      make_request {
+        connection.delete(base_url + path, options)
+      }
     end
 
     private
+
+    def make_request(&block)
+      response = yield
+
+      if response.success?
+        return response.body
+      else
+        message = (response.body && response.body.respond_to?(:as_json)) ? response.body.as_json : response.body
+        raise FortePayments::Error, message
+      end
+    end
 
     def base_url
       "https://sandbox.forte.net/api/v2"
