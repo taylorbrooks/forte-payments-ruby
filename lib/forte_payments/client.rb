@@ -54,7 +54,8 @@ module FortePayments
       if response.success?
         return response.body
       else
-        message = (response.body && response.body.respond_to?(:as_json)) ? response.body.as_json : response.body
+        message = (response.body && response.body["response"] && response.body["response"]["response_desc"]) ? response.body["response"]["response_desc"] : response.body
+        
         raise FortePayments::Error, message
       end
     end
