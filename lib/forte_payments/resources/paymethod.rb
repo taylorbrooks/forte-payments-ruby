@@ -2,24 +2,24 @@ module FortePayments
   class Client
     module Paymethod
 
-      def create_address(customer_id, options = {})
-        post("/customers/#{customer_id}/addresses", options)
+      def create_paymethod(customer_id, options = {})
+        post("/customers/#{customer_id}/paymethods", options)
       end
 
-      def list_addresses(customer_id, options = {})
-        get("/customers/#{customer_id}/addresses", options)
+      def list_paymethods(customer_id, options = {})
+        get("/customers/#{customer_id}/paymethods", options)
       end
 
-      def find_address(customer_id, options = {})
-        get("/customers/#{customer_id}/addresses", options)
+      def find_paymethod(customer_id, paymethod_id, options = {})
+        get("/customers/#{customer_id}/paymethods/#{paymethod_id}", options)
       end
 
-      def update_address(customer_id, options = {})
-        put("/customers/#{customer_id}/addresses/#{address_id}", options)
+      def update_paymethod(customer_id, paymethod_id, options = {})
+        put("/customers/#{customer_id}/paymethods/#{paymethod_id}", options)
       end
 
-      def delete_address(customer_id, address_id)
-        delete("/customers/#{customer_id}/addresses/#{address_id}")
+      def delete_paymethod(paymethod_id)
+        delete("/paymethods/#{paymethod_id}")
       end
 
     end

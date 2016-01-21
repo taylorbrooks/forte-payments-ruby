@@ -10,7 +10,7 @@ module FortePayments
         get("/customers", options)
       end
 
-      def find_customer(customer_id)
+      def find_customer(customer_id, options = {})
         get("/customers/#{customer_id}", options)
       end
 
