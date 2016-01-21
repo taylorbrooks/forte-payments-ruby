@@ -69,11 +69,14 @@ module FortePayments
     end
 
     def connection
-      headers = {
+      connection_options = ENV['PROXIMO_URL'] ? { proxy: ENV['PROXIMO_URL'] } : {}
+
+      connection_options[:headers] = {
         :accept => 'application/json',
         'X-Forte-Auth-Account-Id' => "act_#{account_id}"
-      }
-      Faraday.new(headers: headers) do |connection|
+        }
+
+      Faraday.new(connection_options) do |connection|
         connection.basic_auth api_key, secure_key
         connection.request    :json
         connection.response   :logger
