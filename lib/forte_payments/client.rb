@@ -50,7 +50,7 @@ module FortePayments
     end
 
     def connection
-      Faraday.new(url: base_url, headers: { accept: 'application/json' }) do |connection|
+      Faraday.new(url: base_url, headers: { :accept => 'application/json', 'X-Forte-Auth-Account-Id' => "#{account_id}" }) do |connection|
         connection.basic_auth api_key, secure_key
         connection.request    :json
         connection.response   :logger
